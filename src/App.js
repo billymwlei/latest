@@ -3,22 +3,17 @@ import './App.css';
 import React, { Component } from 'react';
 import Detail from './components/Detail'
 import List from './components/List'
-import { Route,Link,Switch } from 'react-router-dom'
+import { Route,Switch } from 'react-router-dom'
 import { Container, Row, Col } from 'reactstrap';
 
 class App extends Component {
-  constructor() {
-    super();
-  }
-
-
   render() {
     return (
       <Container>
          <Row>
            <Col>
             <div>
-              <h2>Next 5 </h2>
+              <h2>Next 5 match</h2>
             </div>
            </Col>
            </Row>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ListGroup,ListGroupItem } from 'reactstrap';
+import { Row,Col,ListGroup,ListGroupItem } from 'reactstrap';
 //import { withRouter } from 'react-router-dom';
 import Moment from 'moment';
 import DataStore from '../model/DataStore'
@@ -18,7 +18,7 @@ class List extends Component {
 
     componentDidMount() {
         setInterval(this.onInterval, 1000);
-        const unsortedRaces = DataStore.getInstance().getRace();
+        const unsortedRaces = DataStore.getInstance().getRaces();
         var sortedRaces = unsortedRaces.sort(function(a,b){
             return a.closing_time.diff(b.closing_time);
         });
@@ -28,7 +28,6 @@ class List extends Component {
             races : sortedRaces,
             raceDisplay : sortedRaces.slice(0,5)
         });
-  
     }        
 
     onInterval = () => {
@@ -47,21 +46,28 @@ class List extends Component {
         return races;
     }
 
-    btnClick(obj){
-        this.props.history.push('/detail');
-      }
+    btnClick(race)
+    {        
+        this.props.history.push({
+            pathname: '/detail',
+            state:{ raceID:race.id}
+        });
+     }
 
     render() {
         return(
             <div>
-            
              {this.state.date}
-             
             <ListGroup>
                  {
-                this.state.raceDisplay.map( (race) => (                
-                    <ListGroupItem onClick={this.btnClick} >
-                        {race.name}  { race.closing_time.diff(this.state.currentMoment,'second')}  
+                this.state.raceDisplay.map( (race,i) => (                
+                    <ListGroupItem onClick={()=> this.btnClick(race) } >
+                        <Row>
+                            <Col xs={1}></Col>
+                            <Col xs={3}>{race.name} </Col>
+                            <Col xs={4}> { Moment(race.closing_time.diff(this.state.currentMoment)).format('mm:ss')}</Col>  
+                            <Col xs={1}></Col>
+                        </Row>
                     </ListGroupItem>
                     ))
                 }
